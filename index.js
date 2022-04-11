@@ -1,22 +1,24 @@
+import 'dotenv/config'; 
 import express from "express";
 import mongoose from "mongoose";
-import router from "./src/router.js";
-import 'dotenv/config';
+import postsRouter from './src/Post/routerPosts.js';
+import userRouter from "./src/User/routerUser.js";
 
-require('dotenv').config()
-
-
+const PORT = process.env.Port || 8000;
+const DB_URL = process.env.DB_URL || 'mongodb://localhost:27017';
 
 
 const app = express()
 
 app.use(express.json())
-app.use('/api', router)
+app.use('/api', userRouter)
+app.use('/api', postsRouter)
+
 
 const startApp = async () => {
     try {
-        await mongoose.connect(process.env.DB_URL)
-        app.listen(process.env.PORT, () => console.log('hello'))
+        await mongoose.connect(DB_URL)
+        app.listen(PORT, () => console.log('hello'))
     }
     catch (e) {
         console.log('Smth went wrong')
