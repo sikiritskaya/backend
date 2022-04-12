@@ -10,9 +10,10 @@ class AuthService {
         if(newUser || newEmail){
             throw new Error('such user exists') 
         } // не отрабатывает
-        //const hashPassword = bcrypt.hash(password, 5)
+        const hashPassword =  await bcrypt.hash(password, 5)
         const confirmationCode = uuidv4();
-        const user = await AuthUser.create({username, password, email, confirmationCode})
+        const user = await AuthUser.create({username, password: hashPassword, email, confirmationCode})
+        await mailService.sendActivationMail(username, email, confirmationCode)
         return user
     }
     async activate(confirmationCode){
@@ -20,8 +21,9 @@ class AuthService {
         if(!user){
             throw new Error("user not found")
         }
-        return user
-
+        user.isActive = true
+        await user.save()
+        //return user
     }
 }
 

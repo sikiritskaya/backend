@@ -1,3 +1,6 @@
+//это было до, логику поместила в mailService
+
+
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({

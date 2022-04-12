@@ -21,8 +21,7 @@ class AuthController{
                 return res.status(400).json(errors)
             }
             const {username, password, email} = req.body
-            const creationUser = await authService.registration(username, password, email)
-            //здесь отправка письма   
+            const creationUser = await authService.registration(username, password, email) 
             return res.json(creationUser)
         }catch(e){
             res.status(400).json({message: 'registration error'})
@@ -53,10 +52,10 @@ class AuthController{
     async activate(req, res){
         try{
             const user = await authService.activate(req.body.confirmationCode)
-            user.isActive = true
+            return res.redirect('https://www.onliner.by')
         }
         catch(e){
-
+            console.log(e)
         }
     }
     async testRouter(req, res){
