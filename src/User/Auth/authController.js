@@ -5,13 +5,13 @@ import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import authService from "./authService/authService.js";
 
-/* const generateAccessToken = id =>{
+const generateAccessToken = id =>{
     const payload = {
         id,
         username
     }
     return jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: "24h"})
-} */
+}
 
 class AuthController{
     async registration(req,res, next){
@@ -52,7 +52,8 @@ class AuthController{
     }
     async activate(req, res){
         try{
-
+            const user = await authService.activate(req.body.confirmationCode)
+            user.isActive = true
         }
         catch(e){
 

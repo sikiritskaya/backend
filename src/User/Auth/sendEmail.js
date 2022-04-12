@@ -12,10 +12,13 @@ const transporter = nodemailer.createTransport({
   });
 
 const mailOptions ={
-    from: 'sikiritskaya@gmail.com',
-    to: 'sikiritskaya@mail.ru',
-    subject: 'test',
-    text: 'hello again'
+    from: process.env.MY_EMAIL,
+    to: email,
+    subject: 'confirm your account',
+    html: `
+    <h1>hello ${username}</h1>
+    <p>For virification please click on link <a href= http://localhost:8000//activate/${confirmationCode}></a></p>
+    `
 }  
 
 transporter.sendMail(mailOptions, (err,success)=>{
