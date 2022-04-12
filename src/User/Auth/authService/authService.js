@@ -9,10 +9,10 @@ class AuthService {
         const newEmail = await AuthUser.findOne({email})
         if(newUser || newEmail){
             throw new Error('such user exists') 
-        }
-        const hashPassword = bcrypt.hash(password, 5)
+        } // не отрабатывает
+        //const hashPassword = bcrypt.hash(password, 5)
         const confirmationCode = uuidv4();
-        const user = await AuthUser.create({username, password: hashPassword, email, confirmationCode})
+        const user = await AuthUser.create({username, password, email, confirmationCode})
         return user
     }
     async activate(confirmationCode){
