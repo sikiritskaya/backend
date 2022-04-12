@@ -1,5 +1,4 @@
-import res from "express/lib/response"
-import Post from "./Post.js"
+//import Post from "./Post.js"
 import postsService from "./postsService.js"
 
 class PostsController {

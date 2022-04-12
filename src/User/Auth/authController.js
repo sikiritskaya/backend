@@ -60,7 +60,7 @@ class AuthController{
     }
     async testRouter(req, res){
         try{
-            res.json('well done')
+            return res.json('well done')
         }
         catch(e){
             

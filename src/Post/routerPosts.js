@@ -5,7 +5,7 @@ import postsController from "./postsController.js";
 const postsRouter = new Router();
 
 postsRouter.get('/posts', postsController.getAll)
-postsRouter.get('/posts/:userId', postsController.getUserPosts)
+postsRouter.get('/posts/:userId', postsController.getUserPosts) // не работает
 postsRouter.post('/posts', postsController.create)
 postsRouter.delete('/posts/:id', postsController.delete)
 postsRouter.put('/posts', postsController.update)
