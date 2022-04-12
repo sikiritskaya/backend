@@ -1,6 +1,17 @@
 import Post from "./Post.js"
 
 class PostsService {
+    async getAll(){
+        const posts = await Post.find()
+        return posts
+    }
+    async getUserPosts(){
+        if (!userId) {
+            throw new Error("posts didn't find")
+        }
+        const posts = await Post.findById(userId)
+        return posts
+    }
     async create(post) {
         const createdPost = await Post.create(post)
         return createdPost

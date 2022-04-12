@@ -1,6 +1,27 @@
+import res from "express/lib/response"
+import Post from "./Post.js"
 import postsService from "./postsService.js"
 
 class PostsController {
+    async getAll(req,res){
+        try{
+            const posts = await postsService.getAll()
+            return res.json(posts)
+        }
+        catch(e){
+            res.status(500).json(e)
+        }
+    }
+    async getUserPosts(req,res){
+        try{
+            const {userId} = req.params
+            const posts = await postsService.getUserPosts(userId)
+            res.json(posts)
+        }
+        catch(e){
+            res.status(500).json(e)
+        }
+    }
     async create(req, res) {
         try {
             const post = await postsService.create(req.body)
