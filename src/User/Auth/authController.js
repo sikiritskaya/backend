@@ -1,6 +1,3 @@
-import AuthUser from "./AuthUser.js"
-import nodemailer from "nodemailer";
-import bcrypt from "bcryptjs";
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import authService from "./authService/authService.js";
@@ -28,21 +25,9 @@ class AuthController{
         }
     }
     async login(req,res){
-        if(!AuthUser.isActive){
-            return res.status(401).send({
-                message:'Pending Account. Please verify your email.'
-            })
-        }
         try{
             const {username, password} = req.body
-            const user = await AuthUser.findOne({username})
-            if(!user){
-                return res.status(400).json({message: 'user did non find'})
-            }
-            const validPassword = bcrypt.compareSync(password,user.password)
-            if(!validPassword){
-                return res.status(400).json({message:'password incorrect'})
-            }
+            const user = await authService.login(username, password)
             const token = generateAccessToken(user._id)
             return res.json({token})
         }catch(e){

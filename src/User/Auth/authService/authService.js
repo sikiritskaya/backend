@@ -25,6 +25,22 @@ class AuthService {
         await user.save()
         //return user
     }
+    async login(username, password, ){
+        const user = await AuthUser.findOne({username})
+            if(!user){
+                return res.status(400).json({message: 'user did non find'})
+            }
+            const validPassword = bcrypt.compare(password,user.password)
+            if(!validPassword){
+                return res.status(400).json({message:'password incorrect'})
+            }
+            if(!user.isActive){
+                return res.status(401).send({
+                    message:'Pending Account. Please verify your email.'
+                })
+            }
+        return user 
+    }
 }
 
 export default new AuthService() 
