@@ -9,7 +9,7 @@ class PostsService {
         if (!userId) {
             throw new Error("posts didn't find")
         }
-        const posts = await Post.findById(userId)
+        const posts = await Post.find(userId)
         return posts
     }
     async create(post) {
