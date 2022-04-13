@@ -11,7 +11,7 @@ class PostsController {
             res.status(500).json(e)
         }
     }
-    async getUserPosts(req,res){
+   /*  async getUserPosts(req,res){
         try{
             const {userId} = req.params
             const posts = await postsService.getUserPosts(userId)
@@ -20,10 +20,12 @@ class PostsController {
         catch(e){
             res.status(500).json(e)
         }
-    }
+    } */
     async create(req, res) {
         try {
-            const post = await postsService.create(req.body)
+            const {userId} = req.params.userId
+            const {title, body} = req.body
+            const post = await postsService.create(title, body,userId)
             console.log(req.body)
             res.json(post)
         }

@@ -10,6 +10,7 @@ authRouter.post('/registration', [
 ], authController.registration)
 authRouter.post('/login', authController.login) 
 authRouter.get('/activate/:link', authController.activate)
-authRouter.get('/test', authController.testRouter )
+authRouter.get('/test', authController.getAllUsers )
+authRouter.get('/users/:userId/posts', authController.getAllPosts)
 
 export default authRouter;

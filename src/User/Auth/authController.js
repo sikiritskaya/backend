@@ -21,7 +21,7 @@ class AuthController{
             const creationUser = await authService.registration(username, password, email) 
             return res.json(creationUser)
         }catch(e){
-            res.status(400).json({message: 'registration error'})
+            res.status(400).json({message: 'registration error!'})
         }
     }
     async login(req,res){
@@ -43,12 +43,22 @@ class AuthController{
             console.log(e)
         }
     }
-    async testRouter(req, res){
+    async getAllPosts(req,res){
         try{
-            return res.json('well done')
+            const user = await authService.getAllPosts(req.params.userId)
+            return res.json(user)
         }
         catch(e){
-            
+            console.log(e)
+        }
+    }
+    async getAllUsers(req, res){
+        try{
+           const users = await authService.getAllUsers()
+           return res.json(users)
+        }
+        catch(e){
+            console.log(e)
         }
     }
 }
