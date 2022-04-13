@@ -14,7 +14,7 @@ class PostsService {
         return posts
     } */
     async create(title, body, userId) {
-        const createdPost = await Post.create(title, body, userId).populate("AuthUser")
+        const createdPost = await Post.create(title, body, userId)
         const createdPost = await Post.create(title, body)
         await AuthUser.findByIdAndUpdate({_id: userId})
         return createdPost
