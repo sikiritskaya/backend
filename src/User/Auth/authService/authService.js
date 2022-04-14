@@ -2,7 +2,6 @@ import AuthUser from "../AuthUser.js"
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
 import mailService from "./mailService.js";
-import Post from "../../../Post/Post.js";
 
 class AuthService {
     async registration(username, password, email) {
@@ -10,7 +9,7 @@ class AuthService {
         const newEmail = await AuthUser.findOne({ email })
         if (newUser || newEmail) {
             throw new Error('such user exists')
-        } // не отрабатывает
+        }
         const hashPassword = await bcrypt.hash(password, 5)
         const confirmationCode = uuidv4();
         try {

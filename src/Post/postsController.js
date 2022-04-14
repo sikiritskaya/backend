@@ -1,32 +1,19 @@
-//import Post from "./Post.js"
+
 import postsService from "./postsService.js"
 
 class PostsController {
-    async getAll(req,res){
-        try{
+    async getAll(req, res) {
+        try {
             const posts = await postsService.getAll()
             return res.json(posts)
         }
-        catch(e){
+        catch (e) {
             res.status(500).json(e)
         }
     }
-   /*  async getUserPosts(req,res){
-        try{
-            const {userId} = req.params
-            const posts = await postsService.getUserPosts(userId)
-            res.json(posts)
-        }
-        catch(e){
-            res.status(500).json(e)
-        }
-    } */
     async create(req, res) {
         try {
-            /* const {id} = req.params.id
-            const {title, body} = req.body */
-            const post = await postsService.create(req.body,req.params.id)
-            //console.log(req.body)
+            const post = await postsService.create(req.body, req.params.id)
             res.json(post)
         }
         catch (e) {
