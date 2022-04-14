@@ -36,8 +36,8 @@ class AuthController{
     }
     async activate(req, res){
         try{
-            const user = await authService.activate(req.body.confirmationCode)
-            return res.redirect('https://www.onliner.by')
+            const user = await authService.activate(req.params.link)
+            return res.json(user)
         }
         catch(e){
             console.log(e)
@@ -59,6 +59,16 @@ class AuthController{
         }
         catch(e){
             console.log(e)
+        }
+    }
+    async create(req, res) {
+        try {
+            const user = await authService.createUser(req.body)
+            console.log(req.body)
+            res.json(user)
+        }
+        catch (e) {
+            res.status(500).json(e)
         }
     }
 }

@@ -23,10 +23,10 @@ class PostsController {
     } */
     async create(req, res) {
         try {
-            const {userId} = req.params.userId
-            const {title, body} = req.body
-            const post = await postsService.create(title, body,userId)
-            console.log(req.body)
+            /* const {id} = req.params.id
+            const {title, body} = req.body */
+            const post = await postsService.create(req.body,req.params.id)
+            //console.log(req.body)
             res.json(post)
         }
         catch (e) {

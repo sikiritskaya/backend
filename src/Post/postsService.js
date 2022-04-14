@@ -13,11 +13,13 @@ class PostsService {
         const posts = await Post.find({userId})
         return posts
     } */
-    async create(title, body, userId) {
-        const createdPost = await Post.create(title, body, userId)
-        const createdPost = await Post.create(title, body)
-        await AuthUser.findByIdAndUpdate({_id: userId})
-        return createdPost
+    async create(post, id) {
+        const createdPost = await Post.create(post)
+       // console.log(createdPost)
+       // const createdPost = await Post.create(title, body)
+        const newUser = await AuthUser.findByIdAndUpdate({_id: id},{$push:{posts: createdPost._id}},{ new: true });
+        //return newUser
+       return createdPost
     }
     async delete(id) {
         if (!id) {
