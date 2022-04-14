@@ -45,8 +45,8 @@ class AuthController{
     }
     async getAllPosts(req,res){
         try{
-            const user = await authService.getAllPosts(req.params.userId)
-            return res.json(user)
+            const posts = await authService.getAllPosts(req.params.id)
+            return res.json(posts)
         }
         catch(e){
             console.log(e)

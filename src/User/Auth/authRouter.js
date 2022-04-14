@@ -11,6 +11,7 @@ authRouter.post('/registration', [
 authRouter.post('/login', authController.login) 
 authRouter.get('/activate/:link', authController.activate)
 authRouter.get('/test', authController.getAllUsers )
-authRouter.get('/users/:userId/posts', authController.getAllPosts)
+authRouter.get('/users/:id', authController.getAllPosts)
+authRouter.post('/users/create', authController.create)
 
 export default authRouter;
