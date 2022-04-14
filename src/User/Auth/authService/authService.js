@@ -21,7 +21,7 @@ class AuthService {
         catch (e) {
             console.log(e)
         }
-        
+
     }
     async activate(confirmationCode) {
         const user = await AuthUser.findOne({ confirmationCode })
@@ -32,27 +32,30 @@ class AuthService {
         await user.save()
         return user
     }
-    async login(username, password,) {
-        const user = await AuthUser.findOne({ username })
-        if (!user) {
-            return res.status(400).json({ message: 'user did non find' })
+    async login(username, password) {
+        try {
+            const user = await AuthUser.findOne({ username})
+             if (!user) {
+                throw new Error ('user did not find')
+            }
+            const validPassword = await bcrypt.compare(password, user.password)
+            if (!validPassword) {
+                throw new Error ('password incorrect')
+            }
+            if (!user.isActive) {
+                throw new Error ('Pending Account. Please verify your email.')
+            } 
+            return user
         }
-        const validPassword = bcrypt.compare(password, user.password)
-        if (!validPassword) {
-            return res.status(400).json({ message: 'password incorrect' })
+        catch (e) {
+            console.log(e)
         }
-        if (!user.isActive) {
-            return res.status(401).send({
-                message: 'Pending Account. Please verify your email.'
-            })
-        }
-        return user
     }
-    async getAllPosts(id){
-        const user = await AuthUser.findOne({_id:id}).populate('posts')
+    async getAllPosts(id) {
+        const user = await AuthUser.findOne({ _id: id }).populate('posts')
         return user.posts
     }
-    async getAllUsers(){
+    async getAllUsers() {
         const users = await AuthUser.find()
         return users
     }

@@ -28,8 +28,9 @@ class AuthController{
         try{
             const {username, password} = req.body
             const user = await authService.login(username, password)
-            const token = generateAccessToken(user._id)
-            return res.json({token})
+            //const token = generateAccessToken(user._id)
+            //return res.json({token})
+            return res.json(user)
         }catch(e){
             res.status(400).json({message: 'login error'})
         }
