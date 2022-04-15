@@ -6,10 +6,10 @@ const AuthUser = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     isActive: {type: Boolean, default: false},
     confirmationCode: {type: String},
-    posts:[{
+    /* posts:[{
         type: mongoose.Schema.Types.ObjectId,
-        ref:"Post"
-    }]
+        ref: "Post"
+    }] */
 })
 
 export default mongoose.model('AuthUser', AuthUser)

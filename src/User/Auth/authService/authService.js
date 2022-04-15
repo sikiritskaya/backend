@@ -2,6 +2,7 @@ import AuthUser from "../AuthUser.js"
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from 'uuid';
 import mailService from "./mailService.js";
+import Post from "../../../Post/Post.js";
 
 class AuthService {
     async registration(username, password, email) {
@@ -51,8 +52,10 @@ class AuthService {
         }
     }
     async getAllPosts(id) {
-        const user = await AuthUser.findOne({ _id: id }).populate('posts')
-        return user.posts
+        const posts = await Post.find({userId: id})
+        return posts
+        //const user = await AuthUser.findOne({ _id: id }).populate('posts')
+        //return user.posts
     }
     async getAllUsers() {
         const users = await AuthUser.find()

@@ -8,7 +8,8 @@ class PostsService {
     }
     async create(post, id) {
         const createdPost = await Post.create(post)
-        const newUser = await AuthUser.findByIdAndUpdate({ _id: id }, { $push: { posts: createdPost._id } }, { new: true });
+        createdPost.userId = id
+        //const newUser = await AuthUser.findByIdAndUpdate({ _id: id }, { $push: { posts: createdPost._id } }, { new: true });
         return createdPost
     }
     async delete(id) {
@@ -16,7 +17,6 @@ class PostsService {
             throw new Error("post didn't find")
         }
         const deletedPost = await Post.findByIdAndDelete(id)
-        // const userUpdate = await AuthUser.findByIdAndUpdate({_id: userId},{$pop: {posts: deletedPost._id}},{ new: true })
         return deletedPost
     }
     async update(post) {

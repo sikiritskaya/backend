@@ -12,6 +12,8 @@ class PostsController {
         }
     }
     async create(req, res) {
+       // const {title, body} = req.body
+       // const {userId} = req.params.id
         try {
             const post = await postsService.create(req.body, req.params.id)
             res.json(post)

@@ -5,6 +5,7 @@ const Post = new mongoose.Schema({
     body: {type: String, required: true},
     userId:{
         type: mongoose.Schema.Types.ObjectId,
+        required: true,
         ref: 'AuthUser'
     }
 })
