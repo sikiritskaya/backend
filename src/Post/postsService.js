@@ -6,9 +6,8 @@ class PostsService {
         const posts = await Post.find()
         return posts
     }
-    async create(post, id) {
+    async create(post) {
         const createdPost = await Post.create(post)
-        createdPost.userId = id
         //const newUser = await AuthUser.findByIdAndUpdate({ _id: id }, { $push: { posts: createdPost._id } }, { new: true });
         return createdPost
     }
