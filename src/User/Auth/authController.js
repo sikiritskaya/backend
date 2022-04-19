@@ -1,14 +1,6 @@
 import { validationResult } from 'express-validator';
-import jwt from 'jsonwebtoken';
 import authService from "./authService/authService.js";
 
-const generateAccessToken = id =>{
-    const payload = {
-        id,
-        username
-    }
-    return jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: "24h"})
-}
 
 class AuthController{
     async registration(req,res){
@@ -28,8 +20,6 @@ class AuthController{
         try{
             const {username, password} = req.body
             const user = await authService.login(username, password)
-            //const token = generateAccessToken(user._id)
-            //return res.json({token})
             return res.json(user)
         }catch(e){
             res.status(400).json({message: 'login error'})
@@ -41,7 +31,7 @@ class AuthController{
             return res.json(user)
         }
         catch(e){
-            console.log(e)
+            res.send(e)
         }
     }
     async getAllPosts(req,res){
@@ -50,7 +40,7 @@ class AuthController{
             return res.json(posts)
         }
         catch(e){
-            console.log(e)
+            res.send(e)
         }
     }
     async getAllUsers(req, res){
@@ -59,17 +49,7 @@ class AuthController{
            return res.json(users)
         }
         catch(e){
-            console.log(e)
-        }
-    }
-    async create(req, res) {
-        try {
-            const user = await authService.createUser(req.body)
-            console.log(req.body)
-            res.json(user)
-        }
-        catch (e) {
-            res.status(500).json(e)
+            res.send(e)
         }
     }
 }

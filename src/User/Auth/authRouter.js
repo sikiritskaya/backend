@@ -4,14 +4,13 @@ import { check } from 'express-validator';
 
 const authRouter = new Router();
 
-authRouter.post('/registration', [
+authRouter.post('/sign-up', [
     check('username', 'should not be empty').notEmpty(),
     check('password', 'should has 4-10 symbols').isLength({min:4, max:10})
 ], authController.registration)
-authRouter.post('/login', authController.login) 
+authRouter.post('/sign-in', authController.login) 
 authRouter.get('/activate/:link', authController.activate)
-authRouter.get('/test', authController.getAllUsers )
+authRouter.get('/users', authController.getAllUsers )
 authRouter.get('/users/:id', authController.getAllPosts)
-authRouter.post('/users/create', authController.create)
 
 export default authRouter;

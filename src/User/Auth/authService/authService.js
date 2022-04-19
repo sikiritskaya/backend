@@ -24,7 +24,7 @@ class AuthService {
 
     }
     async activate(confirmationCode) {
-        const user = await AuthUser.findOne({ confirmationCode })
+        const user = await AuthUser.findOne({ confirmationCode });
         if (!user) {
             throw new Error("user not found")
         }
@@ -34,17 +34,17 @@ class AuthService {
     }
     async login(username, password) {
         try {
-            const user = await AuthUser.findOne({ username})
-             if (!user) {
-                throw new Error ('user did not find')
+            const user = await AuthUser.findOne({ username })
+            if (!user) {
+                throw new Error('user did not find')
             }
             const validPassword = await bcrypt.compare(password, user.password)
             if (!validPassword) {
-                throw new Error ('password incorrect')
+                throw new Error('password incorrect')
             }
             if (!user.isActive) {
-                throw new Error ('Pending Account. Please verify your email.')
-            } 
+                throw new Error('Pending Account. Please verify your email.')
+            }
             return user
         }
         catch (e) {
@@ -52,10 +52,8 @@ class AuthService {
         }
     }
     async getAllPosts(id) {
-        const posts = await Post.find({userId: id})
+        const posts = await Post.find({ userId: id })
         return posts
-        //const user = await AuthUser.findOne({ _id: id }).populate('posts')
-        //return user.posts
     }
     async getAllUsers() {
         const users = await AuthUser.find()

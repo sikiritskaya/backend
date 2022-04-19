@@ -19,9 +19,6 @@ class UserService {
         const userUpdate = await User.findByIdAndUpdate(user._id, user, { new: true })
         return userUpdate
     }
-    /* async sendEmail(user) {
-        
-    } */
 }
 
 export default new UserService()

@@ -29,15 +29,6 @@ class UserController {
             res.status(500).json(e.message)
         }
     }
-    /* async sendEmail(req,res){
-        try{
-            const userSendEmail = await userService.sendEmail(req.body)
-            return res.json(userSendEmail)
-        }
-        catch (e) {
-            res.status(500).json(e.message)
-        }
-    } */
 }
 
 export default new UserController()
