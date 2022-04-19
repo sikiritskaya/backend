@@ -1,3 +1,4 @@
+import Comment from "../Comments/Comment.js"
 import AuthUser from "../User/Auth/AuthUser.js"
 import Post from "./Post.js"
 
@@ -25,7 +26,10 @@ class PostsService {
         const postUpdate = await Post.findByIdAndUpdate(post._id, post, { new: true })
         return postUpdate
     }
-
+    async getAllComments(id){
+        const comments = await Comment.find({postId: id})
+        return comments
+    }
 }
 
 export default new PostsService()
