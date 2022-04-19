@@ -4,7 +4,6 @@ class CommentsService {
 
     async create(comment) {
         const createdComment = await Comment.create(comment)
-        //const newUser = await AuthUser.findByIdAndUpdate({ _id: id }, { $push: { posts: createdPost._id } }, { new: true });
         return createdComment
     }
     async delete(id) {

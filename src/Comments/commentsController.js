@@ -8,7 +8,7 @@ class CommentsController {
             res.json(comment)
         }
         catch (e) {
-            res.status(500).json(e)
+            res.status(500).json('smth wrong')
         }
     }
     async delete(req, res) {

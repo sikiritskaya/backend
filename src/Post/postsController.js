@@ -11,14 +11,14 @@ class PostsController {
             res.status(500).json(e)
         }
     }
-    async create(req, res) {
-        try {
-            const post = await postsService.create(req.body)
-            res.json(post)
-        }
-        catch (e) {
-            res.status(500).json(e)
-        }
+    create(req, res) {
+        postsService.create(req.body)
+            .then(post => {
+                res.json(post)
+            })
+            .catch(e => {
+                res.status(500).json(e)
+            })
     }
     async delete(req, res) {
         try {
@@ -38,12 +38,12 @@ class PostsController {
             res.status(500).json(e.message)
         }
     }
-    async getAllComments(req,res){
-        try{
+    async getAllComments(req, res) {
+        try {
             const allComments = await postsService.getAllComments(req.params.id)
-            return allComments
+            return res.json(allComments)
         }
-        catch(e){
+        catch (e) {
             res.status(500).json(e.message)
         }
     }

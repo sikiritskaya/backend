@@ -1,5 +1,4 @@
 import Comment from "../Comments/Comment.js"
-import AuthUser from "../User/Auth/AuthUser.js"
 import Post from "./Post.js"
 
 class PostsService {
@@ -7,8 +6,8 @@ class PostsService {
         const posts = await Post.find()
         return posts
     }
-    async create(post) {
-        const createdPost = await Post.create(post)
+    create(post) {
+        const createdPost = Post.create(post)
         //const newUser = await AuthUser.findByIdAndUpdate({ _id: id }, { $push: { posts: createdPost._id } }, { new: true });
         return createdPost
     }
