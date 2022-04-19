@@ -2,41 +2,43 @@
 import postsService from "./postsService.js"
 
 class PostsController {
-    async getAll(req, res) {
-        try {
-            const posts = await postsService.getAll()
-            return res.json(posts)
-        }
-        catch (e) {
-            res.status(500).json(e)
-        }
+    getAll(req, res) {
+        postsService.getAll()
+            .then(posts => {
+                return res.json(posts)
+            })
+            .catch(e => {
+                res.status(500).json(e)
+            })
     }
-    async create(req, res) {
-        try {
-            const post = await postsService.create(req.body)
-            res.json(post)
-        }
-        catch (e) {
-            res.status(500).json(e)
-        }
+    create(req, res) {
+        postsService.create(req.body)
+            .then(post => {
+                res.json(post)
+            })
+            .catch(e => {
+                res.status(500).json(e)
+            })
     }
-    async delete(req, res) {
-        try {
-            const post = await postsService.delete(req.params.id)
-            return res.json(post)
-        }
-        catch (e) {
-            res.status(500).json(e.message)
-        }
+    delete(req, res) {
+        postsService.delete(req.params.id)
+            .then(post => {
+                return res.json(post)
+            })
+            .catch(e => {
+                res.status(500).json(e)
+            })
     }
-    async update(req, res) {
-        try {
-            const postUpdate = await postsService.update(req.body)
-            return res.json(postUpdate)
-        }
-        catch (e) {
-            res.status(500).json(e.message)
-        }
+    update(req, res) {
+        postsService.update(req.body)
+            .then(postUpdate => {
+                return res.json(postUpdate)
+            })
+            .catch(e => {
+                res.status(500).json(e)
+            })
+
+
     }
 }
 
