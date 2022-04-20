@@ -5,6 +5,7 @@ import postsRouter from './src/Post/routerPosts.js';
 import userRouter from "./src/User/routerUser.js";
 import authRouter from './src/User/Auth/authRouter.js';
 import cookieParser from 'cookie-parser';
+import commentsRouter from './src/Comments/commentRouter.js';
 
 const PORT = process.env.Port || 8000;
 const DB_URL = process.env.DB_URL || 'mongodb://localhost:27017';
@@ -17,6 +18,7 @@ app.use(cookieParser())
 app.use('/api', userRouter)
 app.use('/api', postsRouter)
 app.use('/api', authRouter)
+app.use('/api', commentsRouter)
 
 
 const startApp = async () => {
