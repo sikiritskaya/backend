@@ -1,7 +1,6 @@
 import { validationResult } from 'express-validator';
 import authService from './authService/authService.js';
 
-
 class AuthController {
     registration(req, res) {
         const errors = validationResult(req);

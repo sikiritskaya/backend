@@ -1,72 +1,60 @@
 import AuthUser from '../AuthUser.js';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-//import mailService from './mailService.js';
+import mailService from './mailService.js';
 import Post from '../../../Post/Post.js';
 
 class AuthService {
-    registration(username, password, email) {
-        AuthUser.findOne({ username })
-            .then(user => {
-                if (user) {
-                    throw new Error('such user exists');
-                }
-            });
-        AuthUser.findOne({ email })
-            .then(newEmail => {
-                if (newEmail) {
-                    throw new Error('such email exists');
-                }
-            });
-        bcrypt.hash(password, 5)
-            .then(hashPassword => {
-                return hashPassword;
-            })
-            .then(hashPassword=>{
-                const confirmationCode = uuidv4();
-                const user = AuthUser.create({ username, password: hashPassword, email, confirmationCode });
-                return user;
-            });
-        /* .then((user,confirmationCode) => {
-                mailService.sendActivationMail(username, email, confirmationCode)
-                return user
-            }) */
-        /*        .then(user=>{
-                   return user
-               }) */
-        /* const user = AuthUser.create({ username, password, email, confirmationCode })
-        //mailService.sendActivationMail(username, email, confirmationCode)
-        return user */
+    async registration(username, password, email) {
+        const newUser = await AuthUser.findOne({ username });
+        const newEmail = await AuthUser.findOne({ email });
+        if (newUser || newEmail) {
+            throw new Error('such user exists');
+        }
+        const hashPassword = await bcrypt.hash(password, 5);
+        const confirmationCode = uuidv4();
+        try {
+            const user = await AuthUser.create({ username, password: hashPassword, email, confirmationCode });
+            await mailService.sendActivationMail(username, email, confirmationCode);
+            return user;
+        }
+        catch (e) {
+            console.log(e);
+        }
     }
-    activate(confirmationCode) {
-        const user = AuthUser.findOne({ confirmationCode });
+    async activate(confirmationCode) {
+        const user = await AuthUser.findOne({ confirmationCode });
         if (!user) {
             throw new Error('user not found');
         }
         user.isActive = true;
-        user.save();
+        await user.save();
         return user;
     }
-    login(username, password) {
-        const user = AuthUser.findOne({ username });
-        if (!user) {
-            throw new Error('user did not find');
+    async login(username, password) {
+        try {
+            const user = await AuthUser.findOne({ username});
+            if (!user) {
+                throw new Error ('user did not find');
+            }
+            const validPassword = await bcrypt.compare(password, user.password);
+            if (!validPassword) {
+                throw new Error ('password incorrect');
+            }
+            if (!user.isActive) {
+                throw new Error ('Pending Account. Please verify your email.');
+            } 
+            return user;
         }
-        const validPassword = bcrypt.compare(password, user.password);
-        if (!validPassword) {
-            throw new Error('password incorrect');
+        catch (e) {
+            console.log(e);
         }
-        if (!user.isActive) {
-            throw new Error('Pending Account. Please verify your email.');
-        }
-        return user;
-
     }
     getAllPosts(id) {
         return Post.find({ userId: id });
     }
     getAllUsers() {
-        return AuthUser.find();
+        return AuthUser.find().populate('posts');
     }
 }
 
