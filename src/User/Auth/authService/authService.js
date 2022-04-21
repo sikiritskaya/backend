@@ -1,7 +1,7 @@
 import AuthUser from '../AuthUser.js';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import mailService from './mailService.js';
+//import mailService from './mailService.js';
 import Post from '../../../Post/Post.js';
 
 class AuthService {
@@ -63,12 +63,10 @@ class AuthService {
 
     }
     getAllPosts(id) {
-        const posts = Post.find({ userId: id });
-        return posts;
+        return Post.find({ userId: id });
     }
     getAllUsers() {
-        const users = AuthUser.find();
-        return users;
+        return AuthUser.find();
     }
 }
 

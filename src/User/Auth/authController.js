@@ -14,7 +14,6 @@ class AuthController {
                 return res.json(creationUser);
             })
             .catch(e => {
-                console.log(e);
                 res.status(500).json(e);
             });
     }
@@ -24,7 +23,6 @@ class AuthController {
             .then(user => {
                 return res.json(user);
             })
-
             .catch(e => {
                 res.send(e);
             });

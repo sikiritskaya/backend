@@ -4,7 +4,6 @@ import Post from './Post.js';
 class PostsService {
     getAll() {
         return Post.find();
-    
     }
     create(post) {
         Post.create(post);
@@ -13,8 +12,7 @@ class PostsService {
         if (!id) {
             throw new Error('post did not find');
         }
-        return Post.findByIdAndDelete(id);
-        
+        return Post.findByIdAndDelete(id);    
     }
     update(post) {
         if (!post._id) {
