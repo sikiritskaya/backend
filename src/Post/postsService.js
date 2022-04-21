@@ -1,29 +1,30 @@
-import Post from "./Post.js"
+import Comment from '../Comments/Comment.js';
+import Post from './Post.js';
 
 class PostsService {
     getAll() {
-        const posts = Post.find()
-        return posts
+        return Post.find();
+    
     }
     create(post) {
-        const createdPost = Post.create(post)
-        return createdPost
+        Post.create(post);
     }
     delete(id) {
         if (!id) {
-            throw new Error("post didn't find")
+            throw new Error('post did not find');
         }
-        const deletedPost = Post.findByIdAndDelete(id)
-        return deletedPost
+        return Post.findByIdAndDelete(id);
+        
     }
-    async update(post) {
+    update(post) {
         if (!post._id) {
-            throw new Error("post didn't find")
+            throw new Error('post did not find');
         }
-        const postUpdate = Post.findByIdAndUpdate(post._id, post, { new: true })
-        return postUpdate
+        return Post.findByIdAndUpdate(post._id, post, { new: true });
     }
-
+    getAllComments(id){
+        return Comment.find({ postId: id });
+    }
 }
 
-export default new PostsService()
+export default new PostsService();

@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer from 'nodemailer';
 
 class MailService {
     constructor() {
@@ -25,10 +25,10 @@ class MailService {
             <h1>hello ${username}</h1>
             <p>For virification please click on link <a href= http://localhost:8000/api/activate/${confirmationCode}>ссылка</a></p>
             `
-        }
-        await this.transporter.sendMail(mailOptions)
+        };
+        await this.transporter.sendMail(mailOptions);
 
     }
 }
 
-export default new MailService()
+export default new MailService();

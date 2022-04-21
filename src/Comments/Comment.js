@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Comment = new mongoose.Schema({
     author: {type: String, required: true},
@@ -8,6 +8,6 @@ const Comment = new mongoose.Schema({
         required: true,
         ref: 'Post'
     }
-})
+});
 
-export default mongoose.model('Comment', Comment)
+export default mongoose.model('Comment', Comment);

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const Post = new mongoose.Schema({
     title: {type: String, required: true},
@@ -8,6 +8,6 @@ const Post = new mongoose.Schema({
         required: true,
         ref: 'AuthUser'
     }
-})
+});
 
-export default mongoose.model('Post', Post)
+export default mongoose.model('Post', Post);
