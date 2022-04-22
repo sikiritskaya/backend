@@ -54,7 +54,7 @@ class AuthService {
         return Post.find({ userId: id }).populate('userId', 'username -_id');
     }
     getAllUsers() {
-        return AuthUser.find();
+        return AuthUser.find().populate({path: 'posts', select: 'title body'});
     }
 }
 

@@ -7,5 +7,14 @@ const AuthUser = new mongoose.Schema({
     isActive: {type: Boolean, default: false},
     confirmationCode: {type: String}
 });
+AuthUser.virtual('posts', {
+    ref: 'Post', 
+    localField: '_id',  
+    foreignField: 'userId'
+});
+ 
+AuthUser.set('toObject', { virtuals: true });
+AuthUser.set('toJSON', { virtuals: true });
+ 
 
 export default mongoose.model('AuthUser', AuthUser);

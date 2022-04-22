@@ -9,5 +9,14 @@ const Post = new mongoose.Schema({
         ref: 'AuthUser'
     }
 });
+Post.virtual('comments', {
+    ref: 'Comment', 
+    localField: '_id', 
+    foreignField: 'postId'
+});
+ 
+Post.set('toObject', { virtuals: true });
+Post.set('toJSON', { virtuals: true });
+
 
 export default mongoose.model('Post', Post);

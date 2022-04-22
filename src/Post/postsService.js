@@ -4,7 +4,7 @@ import Post from './Post.js';
 
 class PostsService {
     getAll() {
-        return Post.find().populate('userId', 'username -_id');
+        return Post.find().populate({path: 'comments', select: 'author body'});
     }
     create(post) {
         return Post.create(post);
