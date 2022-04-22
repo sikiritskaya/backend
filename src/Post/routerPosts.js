@@ -1,7 +1,6 @@
 import { Router } from 'express';
 import postsController from './postsController.js';
 
-
 const postsRouter = new Router();
 
 postsRouter.get('/posts', postsController.getAll);

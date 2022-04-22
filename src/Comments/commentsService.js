@@ -5,7 +5,7 @@ class CommentsService {
     create(comment) {
         return Comment.create(comment);
     }
-    async delete(id) {
+    delete(id) {
         if (!id) {
             throw new Error('post did not find');
         }
@@ -16,6 +16,9 @@ class CommentsService {
             throw new Error('post did not find');
         }
         return Comment.findByIdAndUpdate(comment._id, comment, { new: true });
+    }
+    getAll() {
+        return Comment.find().populate('postId', 'title -_id');
     }
 
 }

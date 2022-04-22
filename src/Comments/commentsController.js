@@ -29,6 +29,15 @@ class CommentsController {
                 res.status(500).json(e);
             });
     }
+    getAll(req, res) {
+        commentsService.getAll()
+            .then(posts => {
+                return res.json(posts);
+            })
+            .catch(e => {
+                res.status(500).json(e);
+            });
+    }
 }
 
 export default new CommentsController();

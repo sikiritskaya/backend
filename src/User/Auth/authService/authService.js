@@ -51,10 +51,10 @@ class AuthService {
         }
     }
     getAllPosts(id) {
-        return Post.find({ userId: id });
+        return Post.find({ userId: id }).populate('userId', 'username -_id');
     }
     getAllUsers() {
-        return AuthUser.find().populate('posts');
+        return AuthUser.find();
     }
 }
 
