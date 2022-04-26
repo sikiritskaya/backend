@@ -1,4 +1,5 @@
 import { validationResult } from 'express-validator';
+import logger from '../../../logger/logger.js';
 import authService from './authService/authService.js';
 
 class AuthController {
@@ -14,16 +15,19 @@ class AuthController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     login(req, res) {
         const { username, password } = req.body;
         authService.login(username, password)
             .then(user => {
+                res.cookie('user', username);
                 return res.json(user);
             })
             .catch(e => {
                 res.send(e);
+                logger.error(e);
             });
     }
     activate(req, res) {
@@ -33,6 +37,7 @@ class AuthController {
             })
             .catch(e => {
                 res.send(e);
+                logger.error(e);
             });
     }
     getAllPosts(req, res) {
@@ -41,6 +46,7 @@ class AuthController {
                 return res.json(posts);
             })
             .catch(e => {
+                logger.error(e);
                 res.send(e);
             });
     }
@@ -51,6 +57,7 @@ class AuthController {
             })
             .catch(e => {
                 res.send(e);
+                logger.error(e);
             });
     }
 }

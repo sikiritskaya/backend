@@ -1,3 +1,4 @@
+import logger from '../../logger/logger.js';
 import commentsService from './commentsService.js';
 
 class CommentsController {
@@ -18,6 +19,7 @@ class CommentsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     update(req, res) {
@@ -27,6 +29,7 @@ class CommentsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     getAll(req, res) {
@@ -36,6 +39,7 @@ class CommentsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
 }

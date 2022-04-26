@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import mailService from './mailService.js';
 import Post from '../../../Post/Post.js';
+import logger from '../../../../logger/logger.js';
 
 class AuthService {
     async registration(username, password, email) {
@@ -47,7 +48,7 @@ class AuthService {
             return user;
         }
         catch (e) {
-            console.log(e);
+            logger.error(e.message);
         }
     }
     getAllPosts(id) {

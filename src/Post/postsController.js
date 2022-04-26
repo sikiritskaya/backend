@@ -1,3 +1,4 @@
+import logger from '../../logger/logger.js';
 import postsService from './postsService.js';
 
 class PostsController {
@@ -8,6 +9,7 @@ class PostsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     create(req, res) {
@@ -17,6 +19,7 @@ class PostsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     delete(req, res) {
@@ -26,15 +29,19 @@ class PostsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     update(req, res) {
         postsService.update(req.body)
             .then(postUpdate => {
+                res.cookie('user', '123');
+                res.send('set cookies');
                 return res.json(postUpdate);
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
     getAllComments(req, res) {
@@ -44,6 +51,7 @@ class PostsController {
             })
             .catch(e => {
                 res.status(500).json(e);
+                logger.error(e);
             });
     }
 }
