@@ -22,7 +22,6 @@ class AuthController {
         const { username, password } = req.body;
         authService.login(username, password)
             .then(user => {
-                res.cookie('user', username);
                 return res.json(user);
             })
             .catch(e => {

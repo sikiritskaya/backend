@@ -6,15 +6,7 @@ const logger = winston.createLogger({
         format.align(),
         format.json(),
         format.colorize({all: true})),
-    transports: [new winston.transports.Console({
-        level: process.env.LOG_LEVEL_INFO || 'info',
-        
-    }),
-    new winston.transports.File({
-        level: process.env.LOG_LEVEL_ERROR || 'error',
-        filename: './logger/errors.log'
-    })
-    ]
+    transports: [new winston.transports.Console()]
 });
 
 export default logger;
