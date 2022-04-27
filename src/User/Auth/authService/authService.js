@@ -35,12 +35,9 @@ class AuthService {
     async login(username, password) {
         try {
             const user = await AuthUser.findOne({ username});
-            if (!user) {
-                throw new Error ('user did not find');
-            }
             const validPassword = await bcrypt.compare(password, user.password);
-            if (!validPassword) {
-                throw new Error ('password incorrect');
+            if (!user || !validPassword) {
+                throw new Error ('The user or password is incorrect');
             }
             if (!user.isActive) {
                 throw new Error ('Pending Account. Please verify your email.');

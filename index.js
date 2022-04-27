@@ -27,7 +27,7 @@ const startApp = async () => {
         app.listen(PORT, () => logger.info('hello'));
     }
     catch (e) {
-        logger.error('Server did not answer');
+        logger.error(e.message);
     }
 };
 
