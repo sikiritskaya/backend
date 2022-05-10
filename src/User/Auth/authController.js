@@ -22,7 +22,9 @@ class AuthController {
         const { username, password } = req.body;
         authService.login(username, password)
             .then(user => {
-                return res.json(user);
+                return res
+                    .cookie('token', user.token, { httpOnly: true })
+                    .json(user);
             })
             .catch(e => {
                 res.send(e);
@@ -58,6 +60,22 @@ class AuthController {
                 res.send(e);
                 logger.error(e);
             });
+    }
+    logout(req, res) {
+        //const { token } = req.cookies;
+        //res.clearCookie('token');
+        return res
+            .clearCookie('token')
+            .json('ok');
+        /* authService.logout(token)
+            .then(accessToken => {
+                res.clearCookie('token');
+                return res.json(accessToken);// statuscode=200
+            })
+            .catch(e => {
+                res.send(e);
+                logger.error(e);
+            }); */
     }
 }
 

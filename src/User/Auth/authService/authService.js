@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import mailService from './mailService.js';
 import Post from '../../../Post/Post.js';
 import logger from '../../../../logger/logger.js';
+import jwt from 'jsonwebtoken';
 
 class AuthService {
     async registration(username, password, email) {
@@ -20,7 +21,7 @@ class AuthService {
             return user;
         }
         catch (e) {
-            console.log(e);
+            console.log(e.message);
         }
     }
     async activate(confirmationCode) {
@@ -34,15 +35,22 @@ class AuthService {
     }
     async login(username, password) {
         try {
-            const user = await AuthUser.findOne({ username});
+            const user = await AuthUser.findOne({ username });
             const validPassword = await bcrypt.compare(password, user.password);
             if (!user || !validPassword) {
-                throw new Error ('The user or password is incorrect');
+                throw new Error('The user or password is incorrect');
             }
             if (!user.isActive) {
-                throw new Error ('Pending Account. Please verify your email.');
-            } 
-            return user;
+                throw new Error('Pending Account. Please verify your email.');
+            }
+            const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN, {
+                expiresIn: '24h',
+        
+            });
+            return {
+                ...user,
+                token: accessToken
+            };
         }
         catch (e) {
             logger.error(e.message);
@@ -52,7 +60,10 @@ class AuthService {
         return Post.find({ userId: id }).populate('userId', 'username -_id');
     }
     getAllUsers() {
-        return AuthUser.find().populate({path: 'posts', select: 'title body'});
+        return AuthUser.find().populate({ path: 'posts', select: 'title body' });
+    }
+    logout(){
+        
     }
 }
 
