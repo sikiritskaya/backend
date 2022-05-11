@@ -43,12 +43,12 @@ class AuthService {
             if (!user.isActive) {
                 throw new Error('Pending Account. Please verify your email.');
             }
+            //TODO:  replace username on id
             const accessToken = jwt.sign({ username }, process.env.ACCESS_TOKEN, {
                 expiresIn: '24h',
         
             });
             return {
-                ...user,
                 token: accessToken
             };
         }

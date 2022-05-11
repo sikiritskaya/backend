@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import commentsRouter from './src/Comments/routerComments.js';
 import logger from './logger/logger.js';
 import passport from 'passport';
-//import './src/passport/passport';
+import './src/passport/passport.js';
 
 const PORT = process.env.Port || 8000;
 const DB_URL = process.env.DB_URL || 'mongodb://localhost:27017';
@@ -24,7 +24,7 @@ const auth = passport.authenticate('jwt', { session: false });
 app.use('/api', userRouter);
 app.use('/api', auth, postsRouter);
 app.use('/api', authRouter);
-app.use('/api', auth, commentsRouter);
+app.use('/api', commentsRouter);
 
 const startApp = async () => {
     try {
