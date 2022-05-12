@@ -22,9 +22,9 @@ passport.use(new JWTStrategy({
     secretOrKey: process.env.SECRET_KEY,
     passReqToCallback: true
 }, (req, jwtPayload,done)=>{
-    console.log('122');
+    console.log(jwtPayload);
     return done(null, false, { errors: { 'access': 'is invalid' } });
-   /*  AuthUser.findOne({ username: jwtPayload._doc.username })
+/*  AuthUser.findOne({ _id: jwtPayload._id })
 
         .then((user) => {
             if (!user) {

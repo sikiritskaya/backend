@@ -19,8 +19,9 @@ class AuthController {
             });
     }
     login(req, res) {
-        const { username, password } = req.body;
-        authService.login(username, password)
+        
+        const { username, password, _id } = req.body;
+        authService.login(username, password, _id)
             .then(user => {
                 return res
                     .cookie('token', user.token, { httpOnly: true })

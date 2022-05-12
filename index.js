@@ -21,10 +21,10 @@ app.use(passport.initialize());
 
 const auth = passport.authenticate('jwt', { session: false });
 
-app.use('/api', userRouter);
+app.use('/api/auth', authRouter);
+app.use('/api', auth, userRouter);
 app.use('/api', auth, postsRouter);
-app.use('/api', authRouter);
-app.use('/api', commentsRouter);
+app.use('/api', auth, commentsRouter);
 
 const startApp = async () => {
     try {
