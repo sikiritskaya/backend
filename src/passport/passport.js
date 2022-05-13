@@ -5,20 +5,8 @@ import {ExtractJwt} from 'passport-jwt';
 
 const JWTStrategy = passportJWT.Strategy;
 
-/* const cookieExtractor = req => {
-    let jwt = null; 
-
-    if (req && req.cookies) {
-        jwt = req.cookies['token'];
-    }
-
-    return jwt;
-}; */
-
-
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    //jwtFromRequest: cookieExtractor,
     secretOrKey: process.env.SECRET_KEY,
     passReqToCallback: true
 }, (req, jwtPayload,done)=>{

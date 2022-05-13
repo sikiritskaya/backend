@@ -18,8 +18,7 @@ class AuthController {
                 logger.error(e);
             });
     }
-    login(req, res) {
-        
+    login(req, res) {    
         const { username, password, _id } = req.body;
         authService.login(username, password, _id)
             .then(user => {
@@ -63,20 +62,9 @@ class AuthController {
             });
     }
     logout(req, res) {
-        //const { token } = req.cookies;
-        //res.clearCookie('token');
         return res
             .clearCookie('token')
             .json('ok');
-        /* authService.logout(token)
-            .then(accessToken => {
-                res.clearCookie('token');
-                return res.json(accessToken);// statuscode=200
-            })
-            .catch(e => {
-                res.send(e);
-                logger.error(e);
-            }); */
     }
 }
 
