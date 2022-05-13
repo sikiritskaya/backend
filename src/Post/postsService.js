@@ -1,5 +1,4 @@
-import Comment from '../Comments/Comment.js';
-//import AuthUser from '../User/Auth/AuthUser.js';
+//import Comment from '../Comments/Comment.js';
 import Post from './Post.js';
 
 class PostsService {
@@ -21,8 +20,8 @@ class PostsService {
         }
         return Post.findByIdAndUpdate(post._id, post, { new: true });
     }
-    getAllComments(id) {
-        return Comment.find({ postId: id }).populate('postId', 'title -_id');
+    getAllPosts(id) {
+        return Post.find({ userId: id }).populate('userId', 'username -_id');
     }
 }
 

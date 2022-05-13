@@ -20,6 +20,9 @@ class CommentsService {
     getAll() {
         return Comment.find().populate('postId', 'title -_id');
     }
+    getAllComments(id) {
+        return Comment.find({ postId: id }).populate('postId', 'title -_id');
+    }
 
 }
 

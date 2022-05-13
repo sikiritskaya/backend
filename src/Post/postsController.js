@@ -35,8 +35,6 @@ class PostsController {
     update(req, res) {
         postsService.update(req.body)
             .then(postUpdate => {
-                res.cookie('user', '123');
-                res.send('set cookies');
                 return res.json(postUpdate);
             })
             .catch(e => {
@@ -44,7 +42,7 @@ class PostsController {
                 logger.error(e);
             });
     }
-    getAllComments(req, res) {
+    /* getAllComments(req, res) {
         postsService.getAllComments(req.params.id)
             .then(allComments => {
                 return res.json(allComments);
@@ -52,6 +50,16 @@ class PostsController {
             .catch(e => {
                 res.status(500).json(e);
                 logger.error(e);
+            });
+    } */
+    getAllPosts(req, res) {
+        postsService.getAllPosts(req.params.id)
+            .then(posts => {
+                return res.json(posts);
+            })
+            .catch(e => {
+                logger.error(e);
+                res.send(e);
             });
     }
 }

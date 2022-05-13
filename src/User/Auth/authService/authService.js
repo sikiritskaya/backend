@@ -2,15 +2,15 @@ import AuthUser from '../AuthUser.js';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import mailService from './mailService.js';
-import Post from '../../../Post/Post.js';
+//import Post from '../../../Post/Post.js';
 import logger from '../../../../logger/logger.js';
 import jwt from 'jsonwebtoken';
 
 class AuthService {
-    async registration(username, password, email) {
-        const newUser = await AuthUser.findOne({ username });
-        const newEmail = await AuthUser.findOne({ email });
-        if (newUser || newEmail) {
+    async signUp(username, password, email) {
+        const existingUser = await AuthUser.findOne({ $and: [{ username }, { email }] });
+        //const newEmail = await AuthUser.findOne({ email });
+        if (existingUser) {
             throw new Error('such user exists');
         }
         const hashPassword = await bcrypt.hash(password, 5);
@@ -21,7 +21,7 @@ class AuthService {
             return user;
         }
         catch (e) {
-            console.log(e.message);
+            logger.error(e.message);
         }
     }
     async activate(confirmationCode) {
@@ -33,7 +33,7 @@ class AuthService {
         await user.save();
         return user;
     }
-    async login(username, password) {
+    async signIn(username, password) {
         try {
             const user = await AuthUser.findOne({ username });
             const validPassword = await bcrypt.compare(password, user.password);
@@ -43,10 +43,10 @@ class AuthService {
             if (!user.isActive) {
                 throw new Error('Pending Account. Please verify your email.');
             }
-            const{_id}=user;
-            const accessToken = jwt.sign({_id}, process.env.SECRET_KEY, {
-                expiresIn: '24h',
-        
+            const { _id } = user;
+            const accessToken = jwt.sign({ _id }, process.env.SECRET_KEY, {
+                expiresIn: process.env.EXPIRATION_DATE,
+
             });
             return {
                 token: accessToken
@@ -56,15 +56,12 @@ class AuthService {
             logger.error(e.message);
         }
     }
-    getAllPosts(id) {
+    /* getAllPosts(id) {
         return Post.find({ userId: id }).populate('userId', 'username -_id');
-    }
-    getAllUsers() {
+    } */
+    /* getAllUsers() {
         return AuthUser.find().populate({ path: 'posts', select: 'title body' });
-    }
-    logout(){
-        
-    }
+    } */
 }
 
 export default new AuthService(); 

@@ -6,6 +6,6 @@ const userRouter = new Router();
 userRouter.post('/users', userController.create);
 userRouter.delete('/users/:id', userController.delete);
 userRouter.put('/users', userController.update);
-//router.post('/users/sendemail', userController.sendEmail)
+userRouter.get('/users', userController.getAllUsers);
 
 export default userRouter;

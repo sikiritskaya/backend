@@ -6,4 +6,13 @@ const User = new mongoose.Schema({
     email: {type: String, required: true},
 });
 
+User.virtual('posts', {
+    ref: 'Post',
+    localField: '_id',
+    foreignField: 'userId'
+});
+
+User.set('toObject', { virtuals: true });
+User.set('toJSON', { virtuals: true });
+
 export default mongoose.model('User', User);

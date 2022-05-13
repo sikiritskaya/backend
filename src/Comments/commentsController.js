@@ -42,6 +42,16 @@ class CommentsController {
                 logger.error(e);
             });
     }
+    getAllComments(req, res) {
+        commentsService.getAllComments(req.params.id)
+            .then(allComments => {
+                return res.json(allComments);
+            })
+            .catch(e => {
+                res.status(500).json(e);
+                logger.error(e);
+            });
+    }
 }
 
 export default new CommentsController();

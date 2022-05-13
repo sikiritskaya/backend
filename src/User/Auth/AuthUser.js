@@ -8,14 +8,14 @@ const AuthUser = new mongoose.Schema({
     confirmationCode: { type: String }
 });
 
-AuthUser.virtual('posts', {
+/* AuthUser.virtual('posts', {
     ref: 'Post',
     localField: '_id',
     foreignField: 'userId'
 });
 
 AuthUser.set('toObject', { virtuals: true });
-AuthUser.set('toJSON', { virtuals: true });
+AuthUser.set('toJSON', { virtuals: true }); */
 
 
 export default mongoose.model('AuthUser', AuthUser);

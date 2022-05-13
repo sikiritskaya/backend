@@ -6,7 +6,7 @@ const Post = new mongoose.Schema({
     userId:{
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'AuthUser'
+        ref: 'User'
     }
 });
 Post.virtual('comments', {

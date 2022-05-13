@@ -19,6 +19,9 @@ class UserService {
         const userUpdate = await User.findByIdAndUpdate(user._id, user, { new: true });
         return userUpdate;
     }
+    getAllUsers() {
+        return User.find().populate({ path: 'posts', select: 'title body' });
+    }
 }
 
 export default new UserService();
