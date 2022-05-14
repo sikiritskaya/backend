@@ -23,7 +23,7 @@ class AuthController {
         authService.signIn(username, password, _id)
             .then(user => {
                 return res
-                    .cookie('token', user.token, { httpOnly: true, maxAge: process.env.EXPIRATION_DATE})
+                    .cookie('token', user.token, { httpOnly: true, maxAge: process.env.EXPIRATION_DATE_COOKIES})
                     .json(user);
             })
             .catch(e => {
