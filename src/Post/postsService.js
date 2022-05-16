@@ -1,4 +1,3 @@
-//import Comment from '../Comments/Comment.js';
 import Post from './Post.js';
 
 class PostsService {

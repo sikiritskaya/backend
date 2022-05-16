@@ -2,14 +2,12 @@ import AuthUser from '../AuthUser.js';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
 import mailService from './mailService.js';
-//import Post from '../../../Post/Post.js';
-import logger from '../../../../logger/logger.js';
+import logger from '../../../logger/logger.js';
 import jwt from 'jsonwebtoken';
 
 class AuthService {
     async signUp(username, password, email) {
         const existingUser = await AuthUser.findOne({ $and: [{ username }, { email }] });
-        //const newEmail = await AuthUser.findOne({ email });
         if (existingUser) {
             throw new Error('such user exists');
         }
@@ -43,9 +41,9 @@ class AuthService {
             if (!user.isActive) {
                 throw new Error('Pending Account. Please verify your email.');
             }
-            const { _id } = user;
-            const accessToken = jwt.sign({ _id }, process.env.SECRET_KEY, {
-                expiresIn: process.env.EXPIRATION_DATE,
+            ///const { _id } = user;
+            const accessToken = jwt.sign({ user }, process.env.SECRET_KEY, {
+                expiresIn: `${process.env.TOKEN_EXPIRATEION_INTERVAL_HOURS}h`,
 
             });
             return {
@@ -56,12 +54,6 @@ class AuthService {
             logger.error(e.message);
         }
     }
-    /* getAllPosts(id) {
-        return Post.find({ userId: id }).populate('userId', 'username -_id');
-    } */
-    /* getAllUsers() {
-        return AuthUser.find().populate({ path: 'posts', select: 'title body' });
-    } */
 }
 
 export default new AuthService(); 

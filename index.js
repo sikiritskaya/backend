@@ -2,8 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import postsRouter from './src/Post/routerPosts.js';
-import userRouter from './src/User/withoutAuth/routerUser.js';
-import authRouter from './src/User/Auth/authRouter.js';
+//import userRouter from './src/User/routerUser.js';
+import authRouter from './src/Auth/authRouter.js';
 import cookieParser from 'cookie-parser';
 import commentsRouter from './src/Comments/routerComments.js';
 import logger from './logger/logger.js';
@@ -22,7 +22,7 @@ app.use(passport.initialize());
 const auth = passport.authenticate('jwt', { session: false });
 
 app.use('/api/auth', authRouter);
-app.use('/api', auth, userRouter);
+//app.use('/api', auth, userRouter);
 app.use('/api', auth, postsRouter);
 app.use('/api', auth, commentsRouter);
 

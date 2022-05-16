@@ -7,7 +7,6 @@ postsRouter.get('/posts', postsController.getAll);
 postsRouter.post('/posts', postsController.create);
 postsRouter.delete('/posts/:id/', postsController.delete);
 postsRouter.put('/posts', postsController.update);
-//postsRouter.get('/posts/:id', postsController.getAllComments);
 postsRouter.get('/users/:id', postsController.getAllPosts);
 
 export default postsRouter;

@@ -1,5 +1,5 @@
 import { validationResult } from 'express-validator';
-import logger from '../../../logger/logger.js';
+import logger from '../../logger/logger.js';
 import authService from './authService/authService.js';
 
 class AuthController {
@@ -18,12 +18,12 @@ class AuthController {
                 logger.error(e);
             });
     }
-    signIn(req, res) {    
-        const { username, password, _id } = req.body;
-        authService.signIn(username, password, _id)
+    signIn(req, res) {
+        const { username, password } = req.body;
+        authService.signIn(username, password)
             .then(user => {
                 return res
-                    .cookie('token', user.token, { httpOnly: true, maxAge: process.env.EXPIRATION_DATE_COOKIES})
+                    .cookie('token', user.token, { httpOnly: true, maxAge: process.env.TOKEN_EXPIRATEION_INTERVAL_HOURS * 1000 * 60 * 60 })
                     .json(user);
             })
             .catch(e => {
@@ -41,26 +41,6 @@ class AuthController {
                 logger.error(e);
             });
     }
-    /* getAllPosts(req, res) {
-        authService.getAllPosts(req.params.id)
-            .then(posts => {
-                return res.json(posts);
-            })
-            .catch(e => {
-                logger.error(e);
-                res.send(e);
-            });
-    } */
-    /* getAllUsers(req, res) {
-        authService.getAllUsers()
-            .then(users => {
-                return res.json(users);
-            })
-            .catch(e => {
-                res.send(e);
-                logger.error(e);
-            });
-    } */
     logout(req, res) {
         return res
             .clearCookie('token')
