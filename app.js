@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from './logger/logger.js';
-import {sequelize} from './models';
+import db from './db/index.js';
 
 const PORT = process.env.Port || 8000;
 
@@ -17,7 +17,7 @@ app.use('/api', postsRouter); */
 
 const startApp = async () => {
     try {
-        await sequelize.sync();
+        db.sequelize.sync();
         app.listen(PORT, () => logger.info('hello'));
     }
     catch (e) {

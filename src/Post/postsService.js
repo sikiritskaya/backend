@@ -1,4 +1,5 @@
-import Post from './Post.js';
+const db = import("../../db");
+const Post = db.post;
 
 class PostsService {
     getAll() {
