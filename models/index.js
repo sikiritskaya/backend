@@ -1,37 +1,36 @@
 'use strict';
+export const HOST = "localhost";
+export const USER = "postgres";
+export const PASSWORD = "Kristina";
+export const DB = "newdb";
+export const dialect = "postgres";
+export const pool = {
+  max: 5,
+  min: 0,
+  acquire: 30000,
+  idle: 10000
+};
 
-const fs = require('fs');
-const path = require('path');
-const Sequelize = require('sequelize');
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-const db = {};
+import { Sequelize } from 'sequelize';
+const sequelize = new Sequelize(DB, USER, PASSWORD, {
+    host: HOST,
+    dialect: dialect,
+    operatorsAliases: false,
 
-let sequelize;
-if (config.use_env_variable) {
-    sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-    sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
-
-fs
-    .readdirSync(__dirname)
-    .filter(file => {
-        return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
-    })
-    .forEach(file => {
-        const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-        db[model.name] = model;
-    });
-
-Object.keys(db).forEach(modelName => {
-    if (db[modelName].associate) {
-        db[modelName].associate(db);
+    pool: {
+        max: pool.max,
+        min: pool.min,
+        acquire: pool.acquire,
+        idle: pool.idle
     }
 });
 
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+const db = {};
 
-export default db;
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.company = require('./post.model.js')(sequelize, Sequelize);
+db.company = require('./user.js')(sequelize, Sequelize);
+
+module.exports = db;
