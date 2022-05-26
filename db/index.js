@@ -1,4 +1,4 @@
-import { Sequelize } from 'sequelize';
+import * as Sequelize from 'sequelize';
 import { post } from './post.js';
 import { user } from './user.js';
 import { dbConfig } from '../config/dbConfig.js';

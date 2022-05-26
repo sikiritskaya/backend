@@ -2,6 +2,11 @@ import * as Sequelize from 'sequelize';
 
 export const user = (sequelize) => {
     return sequelize.define('users', {
+
+import * as Sequelize from "sequelize";
+export const user = (sequelize, DataTypes) => {
+    return sequelize.define("user", {
+>>>>>>> 93e059d09f7658831597bbb30da5f0c5f81d51d1
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
