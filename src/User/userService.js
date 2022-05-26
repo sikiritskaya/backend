@@ -1,4 +1,6 @@
-import User from './User.js';
+import db from '../../db/index.js';
+
+const User = db.user;
 
 class UserService {
     async create(user) {
@@ -7,20 +9,31 @@ class UserService {
     }
     async delete(id) {
         if (!id) {
-            throw new Error('user didn\'t find');
+            throw new Error('user did not find');
         }
-        const deletedUser = await User.findByIdAndDelete(id);
+        const deletedUser = await User.destroy({ where: { id } }); //returned 1?
         return deletedUser;
     }
     async update(user) {
-        if (!user._id) {
+        if (!user.id) {
             throw new Error('user didn\'t find');
         }
-        const userUpdate = await User.findByIdAndUpdate(user._id, user, { new: true });
+        const userUpdate = await User.update({ username: user.username, password: user.password, email: user.email, updatedAt: user.updatedAt }, {
+            where: {
+                id: user.id
+            }
+        });  //returned [1]
         return userUpdate;
     }
     getAllUsers() {
-        return User.find().populate({ path: 'posts', select: 'title body' });
+        return User.findAll({
+            include: [
+                {
+                    model: db.post,
+                    as: 'posts'
+                }]
+
+        });
     }
 }
 

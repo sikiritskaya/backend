@@ -42,16 +42,6 @@ class PostsController {
                 logger.error(e);
             });
     }
-    /* getAllComments(req, res) {
-        postsService.getAllComments(req.params.id)
-            .then(allComments => {
-                return res.json(allComments);
-            })
-            .catch(e => {
-                res.status(500).json(e);
-                logger.error(e);
-            });
-    } */
     getAllPosts(req, res) {
         postsService.getAllPosts(req.params.id)
             .then(posts => {

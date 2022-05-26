@@ -1,3 +1,4 @@
+//import logger from '../../../logger/logger.js';
 import userService from './userService.js';
 
 class UserController {
@@ -28,6 +29,16 @@ class UserController {
         catch (e) {
             res.status(500).json(e.message);
         }
+    }
+    getAllUsers(req, res) {
+        return userService.getAllUsers()
+            .then(users => {
+                return res.json(users);
+            })
+            .catch(e => {
+                res.send(e);
+            //  logger.error(e);
+            });
     }
 }
 

@@ -1,8 +1,10 @@
-import Post from './Post.js';
+import db from '../../db/index.js';
+
+const Post = db.post;
 
 class PostsService {
     getAll() {
-        return Post.find().populate({path: 'comments', select: 'author body'});
+        return Post.findAll();
     }
     create(post) {
         return Post.create(post);
@@ -11,16 +13,20 @@ class PostsService {
         if (!id) {
             throw new Error('post did not find');
         }
-        return Post.findByIdAndDelete(id);
+        return Post.destroy({ where: { id } });  //returned 1?
     }
     update(post) {
-        if (!post._id) {
+        if (!post.id) {
             throw new Error('post did not find');
         }
-        return Post.findByIdAndUpdate(post._id, post, { new: true });
+        return Post.update({ title: post.title, body: post.body, updatedAt: post.updatedAt }, {
+            where: {
+                id: post.id
+            }
+        });  //[1]?
     }
     getAllPosts(id) {
-        return Post.find({ userId: id }).populate('userId', 'username -_id');
+        return Post.findAll({ where: { userId: id } });
     }
 }
 
