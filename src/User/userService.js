@@ -27,11 +27,12 @@ class UserService {
     }
     getAllUsers() {
         return User.findAll({
-            include: [
+            include: 
                 {
                     model: db.post,
-                    as: 'posts'
-                }]
+                    as: 'posts',
+                    attributes:{exclude:['updatedAt', 'createdAt', 'userId']}
+                }
 
         });
     }
