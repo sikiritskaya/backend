@@ -1,25 +1,33 @@
-import Post from "./Post.js"
+import db from '../../db/index.js';
+
+const Post = db.post;
 
 class PostsService {
-    async create(post) {
-        const createdPost = await Post.create(post)
-        return createdPost
+    getAll() {
+        return Post.findAll();
     }
-    async delete(id) {
+    create(post) {
+        return Post.create(post);
+    }
+    delete(id) {
         if (!id) {
-            throw new Error("post didn't find")
+            throw new Error('post did not find');
         }
-        const deletedPost = await Post.findByIdAndDelete(id)
-        return deletedPost
+        return Post.destroy({ where: { id } });  
     }
-    async update(post) {
-        if (!post._id) {
-            throw new Error("post didn't find")
+    update(post) {
+        if (!post.id) {
+            throw new Error('post did not find');
         }
-        const postUpdate = await Post.findByIdAndUpdate(post._id, post, { new: true })
-        return postUpdate
+        return Post.update({ title: post.title, body: post.body, updatedAt: post.updatedAt }, {
+            where: {
+                id: post.id
+            }
+        });  
     }
-
+    getAllPosts(id) {
+        return Post.findAll({ where: { userId: id } });
+    }
 }
 
-export default new PostsService()
+export default new PostsService();
