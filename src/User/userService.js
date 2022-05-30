@@ -1,6 +1,6 @@
 import db from '../../db/index.js';
-
 const User = db.user;
+const Post = db.post;
 
 class UserService {
     async create(user) {
@@ -11,6 +11,7 @@ class UserService {
         if (!id) {
             throw new Error('user did not find');
         }
+        await Post.destroy({ where: { userId: id } });
         const deletedUser = await User.destroy({ where: { id } }); //returned 1?
         return deletedUser;
     }
@@ -27,12 +28,12 @@ class UserService {
     }
     getAllUsers() {
         return User.findAll({
-            include: 
-                {
-                    model: db.post,
-                    as: 'posts',
-                    attributes:{exclude:['updatedAt', 'createdAt', 'userId']}
-                }
+            include:
+            {
+                model: db.post,
+                as: 'posts',
+                attributes: { exclude: ['updatedAt', 'createdAt', 'userId'] }
+            }
 
         });
     }

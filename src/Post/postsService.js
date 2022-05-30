@@ -13,7 +13,7 @@ class PostsService {
         if (!id) {
             throw new Error('post did not find');
         }
-        return Post.destroy({ where: { id } });  //returned 1?
+        return Post.destroy({ where: { id } });  
     }
     update(post) {
         if (!post.id) {
@@ -23,7 +23,7 @@ class PostsService {
             where: {
                 id: post.id
             }
-        });  //[1]?
+        });  
     }
     getAllPosts(id) {
         return Post.findAll({ where: { userId: id } });

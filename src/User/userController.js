@@ -1,4 +1,3 @@
-//import logger from '../../../logger/logger.js';
 import userService from './userService.js';
 
 class UserController {
@@ -37,7 +36,6 @@ class UserController {
             })
             .catch(e => {
                 res.send(e);
-            //  logger.error(e);
             });
     }
 }

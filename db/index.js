@@ -6,10 +6,7 @@ import { dbConfig } from '../config/dbConfig.js';
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
-    operatorsAliases: false,
-    /*  define:{
-        timestamps: false
-    }, */   //createdAt/updatedAt
+    operatorsAliases: 0,
     pool: {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
@@ -30,6 +27,5 @@ db.post.belongsTo(db.user, {
     foreignKey: 'userId',
     as: 'users'
 });
-//const Op = db.Sequelize.Op;
-//{ foreignKey: 'userId', onDelete: 'cascade', hooks: true }
+
 export default db;

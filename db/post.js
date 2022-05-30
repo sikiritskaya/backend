@@ -12,22 +12,22 @@ export const post = (sequelize) => {
         },
         body: {
             type: Sequelize.INTEGER
-        }, 
-        userId:{
+        },
+        userId: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        createdAt:{
+        createdAt: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW,
             allowNull: false
         },
-        updatedAt:{
+        updatedAt: {
             type: Sequelize.DATE,
             defaultValue: Sequelize.NOW,
             allowNull: false
         }
-        
+
     });
 };
 
